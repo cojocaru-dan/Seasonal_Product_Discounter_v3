@@ -5,4 +5,5 @@ namespace CodeCool.SeasonalProductDiscounter.Service.Users;
 public interface IAuthenticationService
 {
     bool Authenticate(User user);
+    List<User> GetUsers();
 }

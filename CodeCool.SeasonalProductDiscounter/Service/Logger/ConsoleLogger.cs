@@ -1,6 +1,6 @@
 ﻿namespace CodeCool.SeasonalProductDiscounter.Service.Logger;
 
-public class ConsoleLogger : ILogger
+public class ConsoleLogger : LoggerBase
 {
     private void LogMessage(string message, string type)
     {
@@ -10,12 +10,12 @@ public class ConsoleLogger : ILogger
     
     private static string CreateLogEntry(string message, string type) => $"[{DateTime.Now}] {type}: {message}";
 
-    public void LogInfo(string message)
+    public override void LogInfo(string message)
     {
         LogMessage(message, "INFO");
     }
 
-    public void LogError(string message)
+    public override void LogError(string message)
     {
         LogMessage(message, "ERROR");
     }

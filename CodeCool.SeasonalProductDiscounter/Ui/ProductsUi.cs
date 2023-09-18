@@ -8,7 +8,7 @@ public class ProductsUi : UiBase
 {
     private readonly IProductBrowser _productBrowser;
 
-    public ProductsUi(IAuthenticationService authenticationService, IProductBrowser productBrowser, string title) : base(authenticationService, title)
+    public ProductsUi(IProductBrowser productBrowser, string title, bool requireAuthentication = true) : base(title, requireAuthentication)
     {
         _productBrowser = productBrowser;
     }
@@ -20,10 +20,10 @@ public class ProductsUi : UiBase
 
     private static void PrintProducts(string text, IEnumerable<Product> products)
     {
-        Console.WriteLine($"{text}: ");
+        Console.WriteLine(text);
         foreach (var product in products)
         {
-            Console.WriteLine(product);
+            Console.WriteLine($"\t{product}");
         }
     }
 }

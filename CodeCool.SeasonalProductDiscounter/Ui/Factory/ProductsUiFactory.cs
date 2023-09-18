@@ -7,7 +7,7 @@ public class ProductsUiFactory : UiFactoryBase
 {
     private readonly ProductBrowser _productBrowser;
 
-    public ProductsUiFactory(IAuthenticationService authenticationService, ProductBrowser productBrowser) : base(authenticationService)
+    public ProductsUiFactory(ProductBrowser productBrowser)
     {
         _productBrowser = productBrowser;
     }
@@ -17,6 +17,6 @@ public class ProductsUiFactory : UiFactoryBase
 
     public override UiBase Create()
     {
-        return new ProductsUi(AuthenticationService, _productBrowser, UiName);
+        return new ProductsUi(_productBrowser, UiName);
     }
 }

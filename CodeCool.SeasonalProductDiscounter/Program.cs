@@ -1,4 +1,5 @@
-﻿using CodeCool.SeasonalProductDiscounter.Service.Discounts;
+﻿using CodeCool.SeasonalProductDiscounter.Model.Users;
+using CodeCool.SeasonalProductDiscounter.Service.Discounts;
 using CodeCool.SeasonalProductDiscounter.Service.Offers;
 using CodeCool.SeasonalProductDiscounter.Service.Products.Browser;
 using CodeCool.SeasonalProductDiscounter.Service.Products.Provider;
@@ -14,12 +15,13 @@ var productStatistics = new ProductStatistics(productBrowser);
 var discountProvider = new DiscountProvider();
 var discounterService = new DiscounterService(discountProvider);
 
-IOfferService offerService = null;
+IOfferService offerService = new OfferService();
 
-IAuthenticationService authenticationService = null;
-UiFactoryBase productsUiFactory = new ProductsUiFactory(authenticationService, productBrowser);
-UiFactoryBase statisticsUiFactory = null;
-UiFactoryBase offersUiFactory = null;
+IAuthenticationService authenticationService = new AuthenticationService();
+UserAuthenticator userAuthenticator = new UserAuthenticator();
+UiFactoryBase productsUiFactory = new ProductsUiFactory(productBrowser);
+UiFactoryBase statisticsUiFactory = new StatisticsUiFactory(productStatistics);
+UiFactoryBase offersUiFactory = new OffersUiFactory();
 
 SortedList<int, UiFactoryBase> factories = new SortedList<int, UiFactoryBase>
 {
@@ -32,7 +34,15 @@ var uiSelector = new UiSelector(factories);
 
 UiBase ui = uiSelector.Select();
 
-if (ui.Authenticate())
+if (ui.RequireAuthentication)
+{
+    bool validAuthentication = userAuthenticator.Authenticate();
+    if (validAuthentication)
+    {
+        ui.DisplayTitle();
+        ui.Run();
+    }
+} else
 {
     ui.DisplayTitle();
     ui.Run();

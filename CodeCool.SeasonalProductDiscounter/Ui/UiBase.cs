@@ -5,47 +5,17 @@ namespace CodeCool.SeasonalProductDiscounter.Ui;
 
 public abstract class UiBase
 {
-    private readonly IAuthenticationService _authenticationService;
     private readonly string _title;
+    public bool RequireAuthentication { get; }
 
-    protected UiBase(IAuthenticationService authenticationService, string title)
+    protected UiBase(string title, bool requireAuthentication)
     {
         _title = title;
-        _authenticationService = authenticationService;
+        RequireAuthentication = requireAuthentication;
     }
-
-    private static string GetTextInput(string text)
-    {
-        string input = string.Empty;
-
-        while (input == string.Empty)
-        {
-            Console.Write(text);
-            input = Console.ReadLine() ?? string.Empty;
-        }
-
-        return input;
-    }
-
-    private User GetUser()
-    {
-        //...
-        return null;
-    }
-
-
     public void DisplayTitle()
     {
-        //...
+        Console.WriteLine(_title);
     }
-
-    public bool Authenticate()
-    {
-        var user = GetUser();
-        //...
-
-        return false;
-    }
-
     public abstract void Run();
 }
